@@ -1,0 +1,15 @@
+<div>
+	<h2>Listado de productos</h2>
+	<ul>
+		{{! <li>Pan</li>
+		<li>Queso</li>
+		<li>Jamón</li>
+		<li>Cloro</li>
+		<li>Toalla</li> }}
+		{{#each productos}}
+			<li> {{this.nombre}}</li>
+		{{else}}
+			<p>No hay productos</p>
+		{{/each}}
+	</ul>
+</div>
