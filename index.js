@@ -1,5 +1,7 @@
 const express = require('express');
 const { create } = require('express-handlebars');
+const fs = require('fs');
+const path = require('path');
 
 // Instancia express
 const app = express();
@@ -9,11 +11,22 @@ const hbs = create({
 	partialsDir: ['views/partials'],
 });
 
+// JSON usuarios
+let usuarios = fs.readFileSync(
+	path.join(__dirname, 'db', 'usuarios.json'),
+	'utf8',
+	(error, data) => {
+		let usuarios = data;
+		return usuarios;
+	}
+);
+let arrayUsuarios = JSON.parse(usuarios);
+
 // registra motor de plantillas en app, con el proposito que se puedan reconocer los archivos con extension handlebars
 app.engine('handlebars', hbs.engine);
 // establece handlebars como motor predeterminado con el fin que pueda renderizar las vistas
 app.set('view engine', 'handlebars');
-// indica ubicacion de las vistas
+// indica ubicación de las vistas
 app.set('views', __dirname + '/views');
 // Establecer carpeta public como publica, de manera que quedan sus archivos disponibles para ser consumidos accediendo a localhost:3000/public
 app.use(express.static('public'));
@@ -51,38 +64,7 @@ app.get('/productos', (req, res) => {
 	});
 });
 app.get('/usuarios', (req, res) => {
-	res.render('usuarios', {
-		usuarios: [
-			{
-				id: 1,
-				nombre: 'Carlos',
-				apellido: 'Pérez',
-				email: 'carlos@mail.com',
-				telefono: '1111111',
-			},
-			{
-				id: 2,
-				nombre: 'Maria',
-				apellido: 'López',
-				email: 'maria@mail.com',
-				telefono: '2222222',
-			},
-			{
-				id: 3,
-				nombre: 'José',
-				apellido: 'Faúndez',
-				email: 'jose@mail.com',
-				telefono: '3333333',
-			},
-			{
-				id: 4,
-				nombre: 'Antonia',
-				apellido: 'Bustos',
-				email: 'antonia@mail.com',
-				telefono: '4444444',
-			},
-		],
-	});
+	res.render('usuarios', { usuarios: arrayUsuarios });
 });
 
 // INICIAR SERVIDOR
