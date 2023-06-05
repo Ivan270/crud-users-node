@@ -9,17 +9,11 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<nav>
-			<ul>
-				<li><a href='/'>Home</a></li>
-				<li><a href='/about'>About</a></li>
-				<li><a href='/productos'>Productos</a></li>
-			</ul>
-		</nav>
+		{{>navbar background='bg-secondary'}}
 		{{! En body se renderizarán las vistas }}
-		<div class='container'>
+		<main class='container'>
 
 			{{{body}}}
-		</div>
+		</main>
 	</body>
 </html>

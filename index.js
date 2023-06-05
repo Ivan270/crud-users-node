@@ -17,7 +17,7 @@ app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 // Establecer carpeta public como publica, de manera que quedan sus archivos disponibles para ser consumidos accediendo a localhost:3000/public
 app.use(express.static('public'));
-// Publicar carpeta dist de Bootstrap
+// Publicar carpeta dist de BOOTSTRAP
 app.use(
 	'/bootstrap',
 	express.static(__dirname + '/node_modules/bootstrap/dist')
@@ -29,10 +29,13 @@ app.get(['/', '/home'], (req, res) => {
 	res.render('home');
 });
 // Se cambiará el layout de vista about al de nombre secondary
+// app.get('/about', (req, res) => {
+// 	res.render('about', {
+// 		layout: 'secondary',
+// 	});
+// });
 app.get('/about', (req, res) => {
-	res.render('about', {
-		layout: 'secondary',
-	});
+	res.render('about');
 });
 
 app.get('/productos', (req, res) => {
@@ -50,10 +53,34 @@ app.get('/productos', (req, res) => {
 app.get('/usuarios', (req, res) => {
 	res.render('usuarios', {
 		usuarios: [
-			{ nombre: 'Carlos' },
-			{ nombre: 'María' },
-			{ nombre: 'José' },
-			{ nombre: 'Juana' },
+			{
+				id: 1,
+				nombre: 'Carlos',
+				apellido: 'Pérez',
+				email: 'carlos@mail.com',
+				telefono: '1111111',
+			},
+			{
+				id: 2,
+				nombre: 'Maria',
+				apellido: 'López',
+				email: 'maria@mail.com',
+				telefono: '2222222',
+			},
+			{
+				id: 3,
+				nombre: 'José',
+				apellido: 'Faúndez',
+				email: 'jose@mail.com',
+				telefono: '3333333',
+			},
+			{
+				id: 4,
+				nombre: 'Antonia',
+				apellido: 'Bustos',
+				email: 'antonia@mail.com',
+				telefono: '4444444',
+			},
 		],
 	});
 });
