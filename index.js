@@ -17,6 +17,11 @@ app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/views');
 // Establecer carpeta public como publica, de manera que quedan sus archivos disponibles para ser consumidos accediendo a localhost:3000/public
 app.use(express.static('public'));
+// Publicar carpeta dist de Bootstrap
+app.use(
+	'/bootstrap',
+	express.static(__dirname + '/node_modules/bootstrap/dist')
+);
 
 // RUTAS
 // configurar ruta principal para renderizar Home
@@ -39,6 +44,16 @@ app.get('/productos', (req, res) => {
 			{ id: 3, nombre: 'Jamón', precio: 2800 },
 			{ id: 4, nombre: 'Cloro', precio: 800 },
 			{ id: 5, nombre: 'Toalla', precio: 5500 },
+		],
+	});
+});
+app.get('/usuarios', (req, res) => {
+	res.render('usuarios', {
+		usuarios: [
+			{ nombre: 'Carlos' },
+			{ nombre: 'María' },
+			{ nombre: 'José' },
+			{ nombre: 'Juana' },
 		],
 	});
 });
