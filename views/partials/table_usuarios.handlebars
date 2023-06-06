@@ -17,8 +17,35 @@
                 <td>{{this.apellido}}</td>
                 <td>{{this.email}}</td>
                 <td><a class="btn btn-warning" href="/updateUser/{{this.id}}">Actualizar</a></td>
-                <td><button class="btn btn-danger">Eliminar</button></td>
+                <td><button class="btn btn-danger" onclick="deleteUser('{{this.id}}')">Eliminar</button></td>
             </tr>
         {{/each}}
     </tbody>
 </table>
+
+<script>
+    const deleteUser = async (id) =>{
+        try{
+            const raw = JSON.stringify({
+					"id": id,
+                });
+                const myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+                let response = await fetch("/usuarios/"+id, {
+                    method: "DELETE",
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                });
+                let data = await response.json();
+                if(data.code == 200){
+                    alert('Usuario eliminado con éxito');
+                    location.reload();
+                } else{
+                    throw new Error('No se pudo eliminar al usuario')
+                }
+        }catch(error){
+            console.log(error)
+        }
+    }
+</script>

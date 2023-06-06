@@ -1,12 +1,6 @@
 {
     "usuarios": [
         {
-            "id": "1",
-            "nombre": "Mauricio",
-            "apellido": "Soto",
-            "email": "mauricio@gmail.com"
-        },
-        {
             "id": "2",
             "nombre": "Juan",
             "apellido": "Pérez",

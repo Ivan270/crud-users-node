@@ -39,16 +39,21 @@ app.listen(
 
 //RUTAS DE VISTAS
 app.get(["/", "/home"], (req, res) => {
-    res.render("home");
+    res.render("home",{
+        home: true
+    });
 });
 
 app.get("/about", (req, res) => {
-    res.render("about");
+    res.render("about",{
+        about: true
+    });
 });
 
 app.get("/products", (req, res) => {
     res.render("products", {
         productos: ["Pera", "Manzana", "Sandia", "Naranja", "Melón"],
+        products: true
     });
 });
 
@@ -58,7 +63,7 @@ app.get("/updateuser/:id", async (req, res) => {
         const { id } = req.params;
         let usuario = new Usuario();
         let found = await usuario.findById(id);
-        console.log("usuario:", found);
+        // console.log("usuario:", found);
         res.render("update_user", {
             usuario: found,
         });
@@ -69,6 +74,24 @@ app.get("/updateuser/:id", async (req, res) => {
     }
 });
 
+// Actualizar 
+app.put('/updateuser/:id', async (req,res)=>{
+    try {
+        const {id} = req.params;
+        const {nombre, apellido, email} = req.body
+        let usuario = new Usuario()
+        let found = await usuario.findById(id);
+        found.nombre = nombre;
+        found.apellido = apellido;
+        found.email = email;
+        await usuario.update(found)
+        res.send({code: 200, message: 'Usuario actualizado con éxito'})
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({status: 500,message:'No se pudo actualizar el usuario'})
+    }
+})
 app.get("/users", async (req, res) => {
     let usuario = new Usuario();
     let respuesta = usuario.findAll();
@@ -76,6 +99,7 @@ app.get("/users", async (req, res) => {
         .then((data) => {
             res.render("users", {
                 usuarios: data.usuarios,
+                users: true
             });
         })
         .catch((error) => {
@@ -102,3 +126,17 @@ app.post("/usuarios", async (req, res) => {
         });
     }
 });
+
+// Eliminar usuario
+app.delete('/usuarios/:id', async (req,res)=>{
+    try {
+        let {id} = req.params;
+        let user = new Usuario();
+        user.delete(id);
+        res.status(200).send({code:200, message:'Usuario eliminado con éxito'})
+    } catch (error) {
+        res.send('Ocurrió un error al intentar eliminar el usuario')
+    }
+
+})
+
