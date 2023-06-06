@@ -14,13 +14,18 @@ const leerArchivo = (archivo) => {
 
 const escribirArchivo = (archivo, data) => {
 	return new Promise((resolve, reject) => {
-		fs.writeFile(`./db/${arhivo}`, data, 'utf8', (error) => {
-			if (error) {
-				console.log(error);
-				reject('Error al escribir archivo');
+		fs.writeFile(
+			`./db/${archivo}`,
+			JSON.stringify(data, null, 4),
+			'utf8',
+			(error) => {
+				if (error) {
+					console.log(error);
+					reject('Error al escribir archivo');
+				}
+				resolve('Se ha guardado correctamente la información');
 			}
-			resolve('Se ha guardado correctamente la información');
-		});
+		);
 	});
 };
 

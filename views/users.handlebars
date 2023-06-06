@@ -1,8 +1,8 @@
 <h2 class="display-6 text-center mb-5">Listado de usuarios del sistema</h2>
 
-<section >
+<section>
     <div class="w-75 mx-auto">
-    <h4 class="text-center">Formulario de creación de usuarios</h4>
+        <h4 class="text-center">Formulario de creación de usuarios</h4>
         <form id="formCreateUser">
             <label class="form-label" for="createNombre">Nombre</label>
             <input class="form-control mb-3" type="text" name="createNombre" id="createNombre" required>
@@ -25,8 +25,37 @@
 
 <script>
     let formCreateUser = document.getElementById('formCreateUser');
-    formCreateUser.addEventListener('submit',(event)=>{
+    formCreateUser.addEventListener('submit', async (event) => {
         event.preventDefault();
-        console.log('capturando formulario')
+        console.log('capturando formulario');
+        try {
+            const raw = JSON.stringify({
+                "nombre": createNombre.value,
+                "apellido": createApellido.value,
+                "email": createEmail.value
+            });
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            
+            let response = await fetch('/usuarios', {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            });
+            let data = await response.json();
+            if(data.code == 201){
+                alert('Usuario creado con éxito');
+                formCreateUser.reset()
+                // recarga ubicación actual
+                location.reload()
+            }else{
+                throw new Error('Error al guardar los datos en la BD')
+                alert('Ha ocurrido un error al guardar el usuario')
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+
     })
 </script>

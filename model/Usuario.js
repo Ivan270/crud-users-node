@@ -16,8 +16,16 @@ class Usuario {
 	findByEmail(email) {
 		console.log('Buscar por email');
 	}
-	save() {
-		console.log('Guardando usuario');
+	async save() {
+		let data = await this.findAll();
+		let usuario = {
+			id: this.id,
+			nombre: this.nombre,
+			apellido: this.apellido,
+			email: this.email,
+		};
+		data.usuarios.push(usuario);
+		return await escribirArchivo('personas.json', data);
 	}
 	update(usuario) {
 		console.log('actualizar usuario');

@@ -2,6 +2,7 @@ const express = require('express');
 const { create } = require('express-handlebars');
 const fs = require('fs');
 const path = require('path');
+const { v4: uuid } = require('uuid');
 const Usuario = require('./model/Usuario.js');
 
 // Instancia express
@@ -32,6 +33,10 @@ app.set('view engine', 'handlebars');
 // indica ubicación de las vistas
 app.set('views', __dirname + '/views');
 
+// MIDDLEWARES
+// permite procesar información enviada en body (payload) de un request
+app.use(express.json());
+
 // Establecer carpeta public como publica, de manera que quedan sus archivos disponibles para ser consumidos accediendo a localhost:3000/public
 app.use(express.static('public'));
 
@@ -41,7 +46,7 @@ app.use(
 	express.static(__dirname + '/node_modules/bootstrap/dist')
 );
 
-// RUTAS
+// RUTAS VISTAS
 // configurar ruta principal para renderizar Home
 app.get(['/', '/home'], (req, res) => {
 	res.render('home');
@@ -68,9 +73,9 @@ app.get('/productos', (req, res) => {
 		],
 	});
 });
-app.get('/usuarios', (req, res) => {
-	res.render('usuarios', { usuarios: arrayUsuarios });
-});
+// app.get('/usuarios', (req, res) => {
+// 	res.render('usuarios', { usuarios: arrayUsuarios });
+// });
 
 app.get('/users', (req, res) => {
 	let usuario = new Usuario();
@@ -80,6 +85,19 @@ app.get('/users', (req, res) => {
 			users: data.usuarios,
 		});
 	});
+});
+
+// RUTAS ENDPOINTS
+app.post('/usuarios', async (req, res) => {
+	try {
+		let { nombre, apellido, email } = req.body;
+		let id = uuid().slice(0, 6);
+		let newUser = new Usuario(id, nombre, apellido, email);
+		let respuesta = await newUser.save();
+		res.status(201).send({ code: 201, message: respuesta });
+	} catch (error) {
+		res.status(500).send('Ha ocurrido un error al crear el usuario en la DB');
+	}
 });
 
 // INICIAR SERVIDOR
