@@ -1,5 +1,11 @@
 <ul class='list-group'>
 	{{#each data}}
-		<li class='list-group-item'>{{this.nombre}}</li>
+		<li class='list-group-item'>{{this.id}}
+			-
+			{{this.nombre}}
+			-
+			{{this.apellido}}
+			-
+			{{this.email}}</li>
 	{{/each}}
 </ul>

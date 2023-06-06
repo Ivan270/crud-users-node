@@ -1,0 +1,32 @@
+<h2 class="display-6 text-center mb-5">Listado de usuarios del sistema</h2>
+
+<section >
+    <div class="w-75 mx-auto">
+    <h4 class="text-center">Formulario de creación de usuarios</h4>
+        <form id="formCreateUser">
+            <label class="form-label" for="createNombre">Nombre</label>
+            <input class="form-control mb-3" type="text" name="createNombre" id="createNombre" required>
+            <label for="createApellido">Apellido</label>
+            <input class="form-control mb-3" type="text" name="createApellido" id="createApellido" required>
+            <label for="createEmail">Email</label>
+            <input class="form-control mb-3" type="email" name="createEmail" id="createEmail" required>
+            <button class="btn btn-primary" type="submit">Crear</button>
+        </form>
+    </div>
+</section>
+
+<hr class="my-5">
+
+{{#if users}}
+    {{>tabla2 data=users}}
+{{else}}
+    {{> card title='No hay usuarios registrados' msg='Lamentamos estos inconvenientes.'}}
+{{/if}}
+
+<script>
+    let formCreateUser = document.getElementById('formCreateUser');
+    formCreateUser.addEventListener('submit',(event)=>{
+        event.preventDefault();
+        console.log('capturando formulario')
+    })
+</script>

@@ -2,6 +2,7 @@ const express = require('express');
 const { create } = require('express-handlebars');
 const fs = require('fs');
 const path = require('path');
+const Usuario = require('./model/Usuario.js');
 
 // Instancia express
 const app = express();
@@ -24,12 +25,16 @@ let arrayUsuarios = JSON.parse(usuarios);
 
 // registra motor de plantillas en app, con el proposito que se puedan reconocer los archivos con extension handlebars
 app.engine('handlebars', hbs.engine);
+
 // establece handlebars como motor predeterminado con el fin que pueda renderizar las vistas
 app.set('view engine', 'handlebars');
+
 // indica ubicación de las vistas
 app.set('views', __dirname + '/views');
+
 // Establecer carpeta public como publica, de manera que quedan sus archivos disponibles para ser consumidos accediendo a localhost:3000/public
 app.use(express.static('public'));
+
 // Publicar carpeta dist de BOOTSTRAP
 app.use(
 	'/bootstrap',
@@ -65,6 +70,16 @@ app.get('/productos', (req, res) => {
 });
 app.get('/usuarios', (req, res) => {
 	res.render('usuarios', { usuarios: arrayUsuarios });
+});
+
+app.get('/users', (req, res) => {
+	let usuario = new Usuario();
+	let respuesta = usuario.findAll();
+	respuesta.then((data) => {
+		res.render('users', {
+			users: data.usuarios,
+		});
+	});
 });
 
 // INICIAR SERVIDOR
