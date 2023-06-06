@@ -4,49 +4,31 @@
             "id": "1",
             "nombre": "Mauricio",
             "apellido": "Soto",
-            "email": "mauricio@mail.com"
+            "email": "mauricio@gmail.com"
         },
         {
             "id": "2",
             "nombre": "Juan",
             "apellido": "Pérez",
-            "email": "juan@mail.com"
+            "email": "juan@gmail.com"
         },
         {
             "id": "3",
             "nombre": "María",
             "apellido": "Castillo",
-            "email": "maria@mail.com"
+            "email": "maria@gmail.com"
         },
         {
-            "id": "13b88e",
-            "nombre": "Iván",
-            "apellido": "Verdugo",
-            "email": "ivan260@mail.com"
+            "id": "37b282",
+            "nombre": "Nelson",
+            "apellido": "Ramírez",
+            "email": "nelson@gmail.com"
         },
         {
-            "id": "c28969",
-            "nombre": "Felipe ",
-            "apellido": "Andrusco",
-            "email": "felo@mail.com"
-        },
-        {
-            "id": "27cd69",
-            "nombre": "Antonio",
-            "apellido": "Ahumada",
-            "email": "tono@mail.com"
-        },
-        {
-            "id": "6f2a1b",
-            "nombre": "Jose",
-            "apellido": "Perez",
-            "email": "pepe@mail.com"
-        },
-        {
-            "id": "bffe71",
-            "nombre": "Pipe",
-            "apellido": "Pasda",
-            "email": "pipe@mail.com"
+            "id": "a362d5",
+            "nombre": "Israel",
+            "apellido": "Medoza",
+            "email": "israel@gmail.com"
         }
     ]
 }

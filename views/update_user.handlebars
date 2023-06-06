@@ -1,0 +1,65 @@
+<h1 class='text-center my-5'>Página de actualización de usuario.</h1>
+
+<div class='w-75 mx-auto'>
+
+	<h4 class='text-center'>Formulario de creación de usuarios</h4>
+
+	<form id='formUpdateUser'>
+		<label for='userId'>ID</label>
+		<input class='form-control mb-3' type='text' name='userId' id='userId' value='{{usuario.id}}' disabled />
+		
+		<label class='form-label' for='updateNombre'>Nombre</label>
+		<input class='form-control mb-3' type='text' name='updateNombre' id='updateNombre' value='{{usuario.nombre}}'
+			required />
+		
+		<label for='updateApellido'>Apellido</label>
+		<input class='form-control mb-3' type='text' name='updateApellido' id='updateApellido'
+			value='{{usuario.apellido}}' required />
+		
+		<label for='updateEmail'>Email</label>
+		<input class='form-control mb-3' type='email' name='updateEmail' id='updateEmail' value='{{usuario.email}}'
+			required />
+		<button class='btn btn-primary' type='submit'>Actualizar</button>
+
+	</form>
+
+</div>
+
+<script>
+	let formUpdate = document.getElementById('formUpdateUser');
+	formUpdate.addEventListener("submit", async(event) => {
+		event.preventDefault();
+		try{
+                const raw = JSON.stringify({
+					"id": userId.value,
+                    "nombre": updateNombre.value,
+                    "apellido": updateApellido.value,
+                    "email": updateEmail.value
+                });
+
+                const myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                let response = await fetch("/updateuser/"+userId.value, {
+                    method: "PUT",
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                });
+
+                let data = await response.json();
+                
+                if(data.code == 200){
+                    alert("Usuario actualizado con éxito.")
+                    formUpdateUser.reset();
+                    location.reload();
+                }else{
+                    throw new Error("Error al actualizar los datos en la BD.")
+                }
+                
+        }catch(error){
+            console.log(error)
+            alert(error.message)
+        }
+	})
+</script>
